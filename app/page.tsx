@@ -7,6 +7,7 @@ import FormContent from "./components/form";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { nextStep, previousStep, submitForm } from "@/lib/redux/slices/formSlice";
 import { useState } from "react";
+import { validateStep } from "@/lib/utils/formValidation";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -15,8 +16,12 @@ export default function Home() {
   const [triggerSubmit, setTriggerSubmit] = useState(false);
   const totalSteps = 10;
 
+  const isCurrentStepValid = validateStep(currentStep, formState);
+
   const handleNext = () => {
-    dispatch(nextStep());
+    if (isCurrentStepValid) {
+      dispatch(nextStep());
+    }
   };
 
   const handleBack = () => {
@@ -42,6 +47,7 @@ export default function Home() {
         isFirstStep={currentStep === 0}
         isLastStep={currentStep === totalSteps - 1}
         onSubmit={handleSubmit}
+        isNextDisabled={!isCurrentStepValid}
       />
     </div>
   );
