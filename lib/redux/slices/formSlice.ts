@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 
-// Types for form data
 export interface Step1Data {
   category: string;
 }
